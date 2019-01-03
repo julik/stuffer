@@ -55,15 +55,17 @@ class Stuffer
     response_content_length = 1024 * 1024 * 1024 * 64
     chunk_size = Async::IO::Stream::BLOCK_SIZE
     body = CustomizedBody.new(response_content_length)
-    random_source = Random.new
-
+    chunk_of_random = Random.new.bytes(chunk_size)
+    
     Async::Reactor.run do |task|
       begin
         in_chunks_of(response_content_length, chunk_size) do |write_n|
           body.wait_writable(_max_pending_chunks = 8, task)
-          body.write(random_source.bytes(write_n))
+          task.annotate "Writing data"
+          body.write(chunk_of_random.slice(0, write_n))
         end
         body.wait_writable(_max_pending_chunks = 1, task)
+      rescue Errno::EPIPE # disconnect
       ensure
         body.close
       end
