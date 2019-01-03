@@ -1,0 +1,7 @@
+.env
+.bundle
+doc
+tmp
+coverage
+.ruby-version
+
