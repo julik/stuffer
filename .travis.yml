@@ -1,0 +1,14 @@
+dist: trusty
+sudo: false
+language: go
+rvm:
+  - 2.3.4
+cache: bundler
+before_install: rvm use ruby 2.3.4
+install:
+  - gem install bundler
+  - bundle install
+
+script:
+  - GOOS=linux GOARCH=386     go build stuffer.go > /dev/null
+  - GOOS=darwin GOARCH=amd64  go build stuffer.go > /dev/null
