@@ -52,7 +52,10 @@ class Stuffer
   end
 
   def call(env)
-    response_content_length = 1024 * 1024 * 1024 * 64
+    req = Rack::Request.new(env)
+    qry = Rack::Utils.parse_nested_query(req.query_string)
+    response_content_length = qry.fetch("bytes").to_i
+
     chunk_size = Async::IO::Stream::BLOCK_SIZE
     body = CustomizedBody.new(response_content_length)
     chunk_of_random = Random.new.bytes(chunk_size)
