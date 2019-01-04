@@ -38,9 +38,6 @@ class Stuffer
         end
         task.yield
       end
-
-      # Let other tasks take things off the queue inside the Body::Writable
-      task.yield
     end
   end
 
