@@ -39,7 +39,7 @@ class Stuffer
           LOGGER.info { "Slow client, closing" }
           raise SlowLoris, "Disconnecting client as no data was picked up in #{waited_for_s}s"
         end
-        task.yield
+        task.yield # Allow something else to take data from our queue meanwhile
       end
     end
   end
