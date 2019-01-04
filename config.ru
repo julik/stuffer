@@ -1,6 +1,9 @@
 # frozen_string_literal: true
 
 class Stuffer
+  class SlowLoris < StandardError
+  end
+
   # We need to expose the pending tasks to provide backpressure
   # The solution with LimitedQueue is not sufficient for us unfortunately
   class CustomizedBody < ::Async::HTTP::Body::Writable
