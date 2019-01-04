@@ -6,7 +6,7 @@ import (
 	"strconv"
 )
 
-const chunkSize = 1024 * 1024
+const chunkSize = 8 * 1024 // Same as Async::IO::Stream::BLOCK_SIZE
 
 func ServeRandomBlob(w http.ResponseWriter, r *http.Request) {
 	bytesParam := r.URL.Query().Get("bytes")
@@ -19,14 +19,15 @@ func ServeRandomBlob(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Connection", "close")
 	w.Header().Set("Content-Length", bytesParam)
 
-	wholeChunks := bytesToSend / chunkSize
-	remainingChunk := bytesToSend % chunkSize
 	buf := make([]byte, chunkSize)
 	rand.Read(buf)
 
+	wholeChunks := bytesToSend / chunkSize
 	for i := 0; i < wholeChunks; i++ {
 		w.Write(buf)
 	}
+
+	remainingChunk := bytesToSend % chunkSize
 	if remainingChunk > 0 {
 		w.Write(buf[0:remainingChunk])
 	}

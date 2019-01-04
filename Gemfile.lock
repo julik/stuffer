@@ -27,6 +27,7 @@ GEM
     localhost (1.1.4)
     mapping (1.1.1)
     nio4r (2.3.1)
+    puma (3.12.0)
     rack (2.0.6)
     rainbow (3.0.0)
     samovar (1.9.1)
@@ -39,6 +40,7 @@ PLATFORMS
 
 DEPENDENCIES
   falcon
+  puma
 
 BUNDLED WITH
    1.17.2
