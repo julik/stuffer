@@ -21,15 +21,16 @@ func ServeRandomBlob(w http.ResponseWriter, r *http.Request) {
 
 	wholeChunks := bytesToSend / chunkSize
 	remainingChunk := bytesToSend % chunkSize
+	buf := make([]byte, chunkSize)
+	rand.Read(buf)
+
 	for i := 0; i < wholeChunks; i++ {
-		buf := make([]byte, chunkSize)
-		rand.Read(buf)
 		w.Write(buf)
 	}
 	if remainingChunk > 0 {
-		buf := make([]byte, remainingChunk)
-		rand.Read(buf)
-		w.Write(buf)
+		smallerBuf := make([]byte, remainingChunk)
+		copy(buf, smallerBuf)
+		w.Write(smallerBuf)
 	}
 }
 
