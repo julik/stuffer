@@ -28,9 +28,7 @@ func ServeRandomBlob(w http.ResponseWriter, r *http.Request) {
 		w.Write(buf)
 	}
 	if remainingChunk > 0 {
-		smallerBuf := make([]byte, remainingChunk)
-		copy(buf, smallerBuf)
-		w.Write(smallerBuf)
+		w.Write(buf[0:remainingChunk])
 	}
 }
 
