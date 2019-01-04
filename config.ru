@@ -73,7 +73,7 @@ class Stuffer
         body.close
       end
     end
-    [200, {'Connection' => 'close', 'Content-Length' => response_content_length.to_s}, body]
+    [200, {'Server' => 'stuffer/falcon', 'Connection' => 'close', 'Content-Length' => response_content_length.to_s}, body]
   end
 end
 

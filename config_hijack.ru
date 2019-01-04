@@ -22,7 +22,7 @@ class Stuffer
       io.close
     end
 
-    [200, {'Connection' => 'close', 'Content-Length' => response_content_length.to_s, 'rack.hijack' => hj}, []]
+    [200, {'Server' => 'stuffer/puma', 'Connection' => 'close', 'Content-Length' => response_content_length.to_s, 'rack.hijack' => hj}, []]
   end
 end
 
