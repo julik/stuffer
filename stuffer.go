@@ -18,6 +18,7 @@ func ServeRandomBlob(w http.ResponseWriter, r *http.Request) {
 
 	w.Header().Set("Connection", "close")
 	w.Header().Set("Content-Length", bytesParam)
+	w.Header().Set("Server", "stuffer/go")
 
 	buf := make([]byte, chunkSize)
 	rand.Read(buf)
